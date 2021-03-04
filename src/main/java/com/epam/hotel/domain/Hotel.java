@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-import com.epam.hotel.enums.HotelType;
+import com.epam.hotel.enums.RoomType;
 
 import lombok.Data;
 
@@ -18,7 +18,7 @@ public class Hotel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private String id;
+	private Integer hotel_Id;
 	
 	private String name;
 	
@@ -26,10 +26,16 @@ public class Hotel {
 	
 	private String rating;
 	
-	HotelType type;
+	private Rooms rooms;
+	
+	private String phoneNumber;
+	
+	@OneToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name = "room_id", referencedColumnName = "room_id")
+	private RoomType type;
 	
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "address_id", referencedColumnName = "id")
-	Address address;
+	private Address address;
 
 }
