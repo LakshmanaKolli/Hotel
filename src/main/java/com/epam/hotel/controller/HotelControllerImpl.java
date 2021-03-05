@@ -9,6 +9,7 @@ import com.epam.hotel.dto.HotelDTO;
 import com.epam.hotel.exception.HotelException;
 import com.epam.hotel.exception.HotelNotFoundException;
 import com.epam.hotel.response.SaveHotelResponse;
+import com.epam.hotel.response.UpdateHotelResponse;
 import com.epam.hotel.service.HotelService;
 
 @RestController
@@ -25,6 +26,11 @@ public class HotelControllerImpl implements HotelController{
 	@Override
 	public ResponseEntity<HotelDTO> getHotelByHotelId(Integer hotelId) throws HotelNotFoundException {
 		return new ResponseEntity<>(hotelService.getHotelByHotelId(hotelId), HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<UpdateHotelResponse> updateHotelDetails(HotelDTO hotelDTO, Integer hotelId) throws HotelNotFoundException {
+		return new ResponseEntity<>(hotelService.updateHotelDetails(hotelDTO, hotelId), HttpStatus.ACCEPTED);
 	}
 
 }

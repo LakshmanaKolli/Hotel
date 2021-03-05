@@ -12,6 +12,7 @@ import com.epam.hotel.exception.HotelNotFoundException;
 import com.epam.hotel.mapper.HotelMapper;
 import com.epam.hotel.repository.HotelRepository;
 import com.epam.hotel.response.SaveHotelResponse;
+import com.epam.hotel.response.UpdateHotelResponse;
 
 @Service
 public class HotelServiceImpl implements HotelService{
@@ -44,6 +45,21 @@ public class HotelServiceImpl implements HotelService{
 			throw new HotelNotFoundException(String.format("Hotel details not found for given hotelId : %s", hotelId));
 		}
 		return mapper.toHotelDTO(domain.get());
+	}
+
+	@Override
+	public UpdateHotelResponse updateHotelDetails(HotelDTO dto, Integer hotelId) throws HotelNotFoundException {
+		Optional<Hotel> domain = hotelRepository.findById(hotelId);
+		if(domain.isEmpty()) {
+			throw new HotelNotFoundException(String.format("Hotel details not found for given hotelId : %s", hotelId));
+		}
+		Hotel details = domain.get();
+		details.setHotel_Id(hotelId);
+		details.setName(dto.getName());
+		details.setPhoneNumber(dto.getPhoneNumber());
+		details.setRating(dto.getRating());
+		hotelRepository.save(details);
+		return new UpdateHotelResponse("Hotel details updated successfully");
 	}
 
 }

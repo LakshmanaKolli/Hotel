@@ -2,6 +2,8 @@ package com.epam.hotel;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.epam.hotel.dto.HotelDTO;
 import com.epam.hotel.response.SaveHotelResponse;
+import com.epam.hotel.response.UpdateHotelResponse;
 import com.epam.hotel.service.HotelService;
 
 @ExtendWith(SpringExtension.class)
@@ -37,12 +40,22 @@ public class HotelControllerTest extends AbstractBaseTest {
 		mockMvc.perform(post("/hotels/api/v1").contentType(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsBytes(hotelDTO))).andExpect(status().isCreated());
 	}
-	
+
 	@Test
-	void getHotelByHotelId() throws Exception{
+	void getHotelByHotelId() throws Exception {
 		Integer hotelId = 1;
 		Mockito.when(hotelService.getHotelByHotelId(hotelId)).thenReturn(getHotelDTOdetails());
 		mockMvc.perform(get("/hotels/api/v1/hotelDetails/1")).andExpect(status().isOk());
+	}
+
+	@Test
+	void updateHotelDetails() throws Exception {
+		HotelDTO dto = getHotelDTOdetails();
+		UpdateHotelResponse resp = new UpdateHotelResponse("Hotel details updated successfully");
+		Mockito.when(hotelService.updateHotelDetails(dto, 1)).thenReturn(resp);
+		mockMvc.perform(put("/hotels/api/v1/hotelChange/1")
+				.contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsBytes(dto))).andDo(print())
+				.andExpect(status().isAccepted());
 	}
 
 }
