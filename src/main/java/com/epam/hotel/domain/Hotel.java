@@ -27,8 +27,8 @@ public class Hotel {
 	
 	private String rating;
 	
-	@OneToMany(cascade = {CascadeType.ALL})
-	@JoinColumn(name = "room_id")
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "hotel_id") 
 	private List<Room> room;
 	
 	private String phoneNumber;

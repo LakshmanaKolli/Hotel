@@ -13,7 +13,7 @@ public class Address {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private String id;
+	private Integer id;
 	
 	private String country;
 	
