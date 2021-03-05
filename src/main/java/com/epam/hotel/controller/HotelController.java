@@ -1,16 +1,23 @@
 package com.epam.hotel.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.epam.hotel.dto.HotelDTO;
 import com.epam.hotel.exception.HotelException;
+import com.epam.hotel.exception.HotelNotFoundException;
+import com.epam.hotel.response.SaveHotelResponse;
 
 @RequestMapping("/hotels/api/v1")
 public interface HotelController {
 	
 	@PostMapping
-	public ResponseEntity<Object> saveHotelDetails(@RequestBody HotelDTO hotelDTO) throws HotelException;
+	public ResponseEntity<SaveHotelResponse> saveHotelDetails(@RequestBody HotelDTO hotelDTO) throws HotelException;
+	
+	@GetMapping("/hotelDetails/{hotelId}")
+	public ResponseEntity<HotelDTO> getHotelByHotelId(@PathVariable Integer hotelId) throws HotelNotFoundException;
 }

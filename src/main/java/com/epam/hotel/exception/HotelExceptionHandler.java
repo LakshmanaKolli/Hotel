@@ -16,4 +16,10 @@ public class HotelExceptionHandler {
 		return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@ExceptionHandler(HotelNotFoundException.class)
+	public final ResponseEntity<Object> hotelExceptionHandler(HotelNotFoundException ex){
+		ErrorResponse error = new ErrorResponse(ex.getMessage(), 404);
+		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+	}
+	
 }

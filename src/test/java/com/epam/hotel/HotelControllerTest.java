@@ -1,5 +1,6 @@
 package com.epam.hotel;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,13 +29,20 @@ public class HotelControllerTest extends AbstractBaseTest {
 	private HotelService hotelService;
 
 	@Test
-	public void saveHotelDetails() throws Exception {
+	void saveHotelDetails() throws Exception {
 		HotelDTO hotelDTO = getHotelDTOdetails();
 		SaveHotelResponse response = new SaveHotelResponse();
 		response.setMessage("Hotel details saved successfully");
 		Mockito.when(hotelService.saveHotelDetails(hotelDTO)).thenReturn(response);
 		mockMvc.perform(post("/hotels/api/v1").contentType(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsBytes(hotelDTO))).andExpect(status().isCreated());
+	}
+	
+	@Test
+	void getHotelByHotelId() throws Exception{
+		Integer hotelId = 1;
+		Mockito.when(hotelService.getHotelByHotelId(hotelId)).thenReturn(getHotelDTOdetails());
+		mockMvc.perform(get("/hotels/api/v1/hotelDetails/1")).andExpect(status().isOk());
 	}
 
 }

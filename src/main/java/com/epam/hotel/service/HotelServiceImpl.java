@@ -1,11 +1,14 @@
 package com.epam.hotel.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.epam.hotel.domain.Hotel;
 import com.epam.hotel.dto.HotelDTO;
 import com.epam.hotel.exception.HotelException;
+import com.epam.hotel.exception.HotelNotFoundException;
 import com.epam.hotel.mapper.HotelMapper;
 import com.epam.hotel.repository.HotelRepository;
 import com.epam.hotel.response.SaveHotelResponse;
@@ -32,6 +35,15 @@ public class HotelServiceImpl implements HotelService{
 			throw new HotelException(ex.getMessage());
 		}
 		return response;
+	}
+
+	@Override
+	public HotelDTO getHotelByHotelId(Integer hotelId) throws HotelNotFoundException {
+		Optional<Hotel> domain = hotelRepository.findById(hotelId);
+		if(domain.isEmpty()) {
+			throw new HotelNotFoundException(String.format("Hotel details not found for given hotelId : %s", hotelId));
+		}
+		return mapper.toHotelDTO(domain.get());
 	}
 
 }

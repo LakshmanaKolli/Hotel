@@ -3,6 +3,8 @@ package com.epam.hotel;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,7 @@ public class HotelServiceTest extends AbstractBaseTest{
 	private HotelService hotelService;
 	
 	@Test
-	public void saveHotelDetails_success() throws Exception{
+	void saveHotelDetails_success() throws Exception{
 		Hotel domain = hotelMapper.toHotel(getHotelDTOdetails());
 		Mockito.when(hotelRepository.save(domain)).thenReturn(domain);
 		SaveHotelResponse resp = hotelService.saveHotelDetails(getHotelDTOdetails());
@@ -34,8 +36,15 @@ public class HotelServiceTest extends AbstractBaseTest{
 	}
 	
 	@Test
-	public void saveHotelDetails_error() throws Exception{
+	void saveHotelDetails_error() throws Exception{
 		Exception ex = assertThrows(HotelException.class, () -> hotelService.saveHotelDetails(new HotelDTO()));
 		assertEquals("Cannot invoke \"com.epam.hotel.domain.Hotel.getHotel_Id()\" because \"hotel\" is null", ex.getMessage());
+	}
+	
+	@Test
+	void getHotelByHotelId() throws Exception{
+		Optional<Hotel> domain = Optional.of(hotelMapper.toHotel(getHotelDTOdetails()));
+		Mockito.when(hotelRepository.findById(1)).thenReturn(domain);
+		assertEquals(1, hotelService.getHotelByHotelId(1).getHotel_Id());
 	}
 }
