@@ -21,14 +21,15 @@ public class AbstractBaseTest {
 	
 	public HotelDTO getHotelDTOdetails() {
 		HotelDTO dto = new HotelDTO();
+		dto.setHotel_Id(1);
 		dto.setName("AMX");
 		dto.setPhoneNumber("123456789");
 		dto.setDescription("Hotel with all amenities");
 		dto.setRating("4.5");
-		AddressDTO address = new AddressDTO(null, "IN", "AP", "VZM", "TGP", "12345");
+		AddressDTO address = new AddressDTO(1, "IN", "AP", "VZM", "TGP", "12345");
 		dto.setAddress(address);
 		List<RoomDTO> rooms = new ArrayList<>();
-		RoomDTO room = new RoomDTO(null, 1, 200, "Y", RoomType.DELUXE);
+		RoomDTO room = new RoomDTO(1, 1, 200, "Y", RoomType.DELUXE);
 		rooms.add(room);
 		dto.setRoom(rooms);
 		return dto;
