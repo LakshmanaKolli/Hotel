@@ -7,13 +7,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.epam.hotel.dto.HotelDTO;
@@ -21,8 +21,8 @@ import com.epam.hotel.response.SaveHotelResponse;
 import com.epam.hotel.response.UpdateHotelResponse;
 import com.epam.hotel.service.HotelService;
 
-@ExtendWith(SpringExtension.class)
-@WebMvcTest
+@SpringBootTest
+@AutoConfigureMockMvc
 public class HotelControllerTest extends AbstractBaseTest {
 
 	@Autowired
@@ -31,6 +31,7 @@ public class HotelControllerTest extends AbstractBaseTest {
 	@MockBean
 	private HotelService hotelService;
 
+	@WithMockUser(username = "username", password = "password")
 	@Test
 	void saveHotelDetails() throws Exception {
 		HotelDTO hotelDTO = getHotelDTOdetails();
@@ -41,6 +42,7 @@ public class HotelControllerTest extends AbstractBaseTest {
 				.content(mapper.writeValueAsBytes(hotelDTO))).andExpect(status().isCreated());
 	}
 
+	@WithMockUser(username = "username", password = "password")
 	@Test
 	void getHotelByHotelId() throws Exception {
 		Integer hotelId = 1;
@@ -48,6 +50,7 @@ public class HotelControllerTest extends AbstractBaseTest {
 		mockMvc.perform(get("/hotels/api/v1/hotelDetails/1")).andExpect(status().isOk());
 	}
 
+	@WithMockUser(username = "username", password = "password")
 	@Test
 	void updateHotelDetails() throws Exception {
 		HotelDTO dto = getHotelDTOdetails();
