@@ -1,27 +1,24 @@
 package com.epam.hotel;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.epam.hotel.controller.HotelControllerImpl;
-import com.epam.hotel.dto.HotelDTO;
-import com.epam.hotel.service.HotelService;
-import com.epam.hotel.service.HotelServiceImpl;
+import com.epam.hotel.controller.HotelController;
 
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 public class BaseContractTest {
 	
-//	@Autowired
-//	HotelService hotelService;
+	@Autowired
+	HotelController hotelController;
 
 	@BeforeEach
 	void setup() {
-//		HotelDTO response = new HotelDTO();
-//		response.setHotel_Id(1);
-//		response.setName("AMB");
-//		response.setDescription("near ASP");
-//		response.setRating("4.5");
-		RestAssuredMockMvc.standaloneSetup(new HotelServiceImpl());
+		RestAssuredMockMvc.standaloneSetup(hotelController);
 	}
 }

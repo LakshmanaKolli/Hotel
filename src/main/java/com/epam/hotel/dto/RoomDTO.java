@@ -1,6 +1,5 @@
 package com.epam.hotel.dto;
 
-import com.epam.hotel.domain.Hotel;
 import com.epam.hotel.enums.RoomType;
 
 import lombok.AllArgsConstructor;

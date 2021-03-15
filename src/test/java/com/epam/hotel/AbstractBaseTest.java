@@ -3,8 +3,6 @@ package com.epam.hotel;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.epam.hotel.dto.AddressDTO;
 import com.epam.hotel.dto.HotelDTO;
 import com.epam.hotel.dto.RoomDTO;

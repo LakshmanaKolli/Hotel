@@ -19,9 +19,11 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @ApiResponse(description = "Hotel Service")
 @RequestMapping("/hotels/api/v1")
+@SecurityRequirement(name = "bearerAuth")
 public interface HotelController {
 	
 	@Operation(summary = "Saves hotel details")
